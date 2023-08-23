@@ -15,3 +15,8 @@ export enum SnakeColors {
   Body = "orange",
   Tail = "yellow",
 }
+
+export enum BorderPolicy {
+  Wrap,
+  Die,
+}

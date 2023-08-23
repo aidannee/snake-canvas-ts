@@ -5,10 +5,12 @@
 // food -> grow logic
 // die logic
 import lastInputDirection from "./input";
-import { Direction, SnakeSegment, SnakeColors } from "./types";
+import { Direction, SnakeSegment, SnakeColors, BorderPolicy } from "./types";
 
 const cellCount = 10;
 const tileSize = 50;
+
+const borderPolicy = BorderPolicy.Wrap;
 
 const snakeExample: SnakeSegment[] = [
   { x: 4, y: 4 }, // snake head
@@ -37,15 +39,43 @@ const tick = setInterval(() => {
 function moveSnake() {
   switch (lastInputDirection.val) {
     case Direction.Up:
+      if (snakeExample[0].y === 0) {
+        if (borderPolicy === BorderPolicy.Wrap) {
+          snakeExample[0].y = cellCount;
+        } else {
+          // die
+        }
+      }
       snakeExample[0].y--;
       break;
     case Direction.Down:
+      if (snakeExample[0].y === cellCount - 1) {
+        if (borderPolicy === BorderPolicy.Wrap) {
+          snakeExample[0].y = -1;
+        } else {
+          // die
+        }
+      }
       snakeExample[0].y++;
       break;
     case Direction.Left:
+      if (snakeExample[0].x === 0) {
+        if (borderPolicy === BorderPolicy.Wrap) {
+          snakeExample[0].x = cellCount;
+        } else {
+          // die
+        }
+      }
       snakeExample[0].x--;
       break;
     case Direction.Right:
+      if (snakeExample[0].x === cellCount - 1) {
+        if (borderPolicy === BorderPolicy.Wrap) {
+          snakeExample[0].x = -1;
+        } else {
+          // die
+        }
+      }
       snakeExample[0].x++;
       break;
   }
