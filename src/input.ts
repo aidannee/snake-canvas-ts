@@ -1,5 +1,10 @@
 import { Direction } from "./types";
-let lastInputDirection = { val: Direction.Right };
+// let lastInputDirection = { val: Direction.Right };
+
+export const lastDirectionMovedBySnake = { val: Direction.Right };
+export const lastInputByUser = { val: Direction.Right };
+
+// store the current movement direction of the snake head
 
 document.addEventListener("keydown", (event) => {
   switch (event.key) {
@@ -7,40 +12,38 @@ document.addEventListener("keydown", (event) => {
     case "W":
     case "ArrowUp":
       console.log("ArrowUp (or W)");
-      if (lastInputDirection.val === Direction.Down) {
+      if (lastDirectionMovedBySnake.val === Direction.Down) {
         break;
       }
-      lastInputDirection.val = Direction.Up;
+      lastInputByUser.val = Direction.Up;
       break;
     case "s":
     case "S":
     case "ArrowDown":
       console.log("ArrowDown (or S)");
-      if (lastInputDirection.val === Direction.Up) {
+      if (lastDirectionMovedBySnake.val === Direction.Up) {
         break;
       }
-      lastInputDirection.val = Direction.Down;
+      lastInputByUser.val = Direction.Down;
       break;
     case "a":
     case "A":
     case "ArrowLeft":
       console.log("ArrowLeft (or A)");
-      if (lastInputDirection.val === Direction.Right) {
+      if (lastDirectionMovedBySnake.val === Direction.Right) {
         break;
       }
-      lastInputDirection.val = Direction.Left;
+      lastInputByUser.val = Direction.Left;
 
       break;
     case "d":
     case "D":
     case "ArrowRight":
       console.log("ArrowRight (or D)");
-      if (lastInputDirection.val === Direction.Left) {
+      if (lastDirectionMovedBySnake.val === Direction.Left) {
         break;
       }
-      lastInputDirection.val = Direction.Right;
+      lastInputByUser.val = Direction.Right;
       break;
   }
 });
-
-export default lastInputDirection;

@@ -4,19 +4,41 @@
 // tail update logic
 // food -> grow logic
 // die logic
-import lastInputDirection from "./input";
-import { Direction, SnakeSegment, SnakeColors, BorderPolicy } from "./types";
+
+import {
+  Direction,
+  SnakeSegment,
+  SnakeColors,
+  BorderPolicy,
+  GridItem,
+  GridPosition,
+  GridItemType,
+} from "./types";
+
+import { lastDirectionMovedBySnake, lastInputByUser } from "./input";
 
 const cellCount = 10;
 const tileSize = 50;
 
 const borderPolicy = BorderPolicy.Wrap;
-
-const snakeExample: SnakeSegment[] = [
-  { x: 4, y: 4 }, // snake head
-  // { x: 1, y: 0 },
-  // { x: 2, y: 0 }, // snake tail
+const sceneElements: GridItem[] = [
+  // {
+  //   type: GridItemType.Apple,
+  //   pos: { x: 0, y: 0 },
+  // },
+  // {
+  //   type: GridItemType.Bolt,
+  //   pos: { x: 1, y: 1 },
+  // },
 ];
+const snake: SnakeSegment[] = [
+  { x: 4, y: 4 }, // snake head
+  { x: 3, y: 4 },
+  { x: 3, y: 3 }, // snake tail
+  { x: 3, y: 2 }, // snake tail
+  { x: 3, y: 1 }, // snake tail
+];
+
 // make canvas of size (cellCount * tileSize) x (cellCount * tileSize)
 const canvas = document.createElement("canvas");
 canvas.width = cellCount * tileSize;
@@ -29,71 +51,168 @@ canvas.style.backgroundColor = "pink";
 const ctx = canvas.getContext("2d")!;
 
 const tick = setInterval(() => {
-  console.log("DEBUG", lastInputDirection.val);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   moveSnake();
   detectCollision();
   drawSnake();
-  drawDebugGrid();
-}, 1000);
+  // drawDebugGrid();
+  populateScene();
+  fruitFunction();
+  drawSceneElements();
+}, 200);
 
+function fruitFunction() {
+  // ctx.fillStyle = "red";
+  // ctx.fillRect(0, 0, tileSize, tileSize);
+}
+function populateScene() {
+  if (
+    sceneElements.filter((element) => element.type === GridItemType.Apple)
+      .length < 1
+  ) {
+    sceneElements.push({
+      type: GridItemType.Apple,
+      pos: {
+        x: Math.floor(Math.random() * cellCount),
+        y: Math.floor(Math.random() * cellCount),
+      },
+    });
+  }
+  if (
+    sceneElements.filter((element) => element.type === GridItemType.Bolt)
+      .length < 1
+  ) {
+    sceneElements.push({
+      type: GridItemType.Bolt,
+      pos: {
+        x: Math.floor(Math.random() * cellCount),
+        y: Math.floor(Math.random() * cellCount),
+      },
+    });
+  }
+  console.log(sceneElements);
+}
+function drawSceneElements() {
+  sceneElements.forEach((element) => {
+    switch (element.type) {
+      case GridItemType.Apple:
+        ctx.fillStyle = "red";
+        ctx.fillRect(
+          element.pos.x * tileSize,
+          element.pos.y * tileSize,
+          tileSize,
+          tileSize
+        );
+        break;
+      case GridItemType.Bolt:
+        ctx.fillStyle = "blue";
+        ctx.fillRect(
+          element.pos.x * tileSize,
+          element.pos.y * tileSize,
+          tileSize,
+          tileSize
+        );
+        break;
+    }
+  });
+}
 function moveSnake() {
-  switch (lastInputDirection.val) {
+  let newHead = { ...snake[0] }; // copy the head
+
+  switch (lastInputByUser.val) {
     case Direction.Up:
-      if (snakeExample[0].y === 0) {
-        if (borderPolicy === BorderPolicy.Wrap) {
-          snakeExample[0].y = cellCount;
-        } else {
-          // die
-        }
+      lastDirectionMovedBySnake.val = Direction.Up;
+      newHead.y--;
+      if (newHead.y < 0) {
+        newHead.y =
+          borderPolicy === BorderPolicy.Wrap ? cellCount - 1 : newHead.y;
+        // handle die if not wrap
       }
-      snakeExample[0].y--;
       break;
     case Direction.Down:
-      if (snakeExample[0].y === cellCount - 1) {
-        if (borderPolicy === BorderPolicy.Wrap) {
-          snakeExample[0].y = -1;
-        } else {
-          // die
-        }
+      lastDirectionMovedBySnake.val = Direction.Down;
+      newHead.y++;
+      if (newHead.y === cellCount) {
+        newHead.y = borderPolicy === BorderPolicy.Wrap ? 0 : newHead.y;
+        // handle die if not wrap
       }
-      snakeExample[0].y++;
       break;
     case Direction.Left:
-      if (snakeExample[0].x === 0) {
-        if (borderPolicy === BorderPolicy.Wrap) {
-          snakeExample[0].x = cellCount;
-        } else {
-          // die
-        }
+      lastDirectionMovedBySnake.val = Direction.Left;
+      newHead.x--;
+      if (newHead.x < 0) {
+        newHead.x =
+          borderPolicy === BorderPolicy.Wrap ? cellCount - 1 : newHead.x;
+        // handle die if not wrap
       }
-      snakeExample[0].x--;
       break;
     case Direction.Right:
-      if (snakeExample[0].x === cellCount - 1) {
-        if (borderPolicy === BorderPolicy.Wrap) {
-          snakeExample[0].x = -1;
-        } else {
-          // die
-        }
+      lastDirectionMovedBySnake.val = Direction.Right;
+      newHead.x++;
+      if (newHead.x === cellCount) {
+        newHead.x = borderPolicy === BorderPolicy.Wrap ? 0 : newHead.x;
+        // handle die if not wrap
       }
-      snakeExample[0].x++;
       break;
+  }
+
+  // Insert the new head at the beginning
+  snake.unshift(newHead);
+
+  // Check if snake has eaten food
+  // If not, remove the tail
+  // If yes, don't pop the tail and add logic to handle food consumption
+  snake.pop();
+}
+
+function detectCollision() {
+  // if the head is in the same place as a body segment
+  // if the head is in the same place as an apple
+  // if the head is in the same place as trap
+  for (let i = 1; i < snake.length; i++) {
+    if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+      die();
+    }
+  }
+
+  for (let i = 0; i < sceneElements.length; i++) {
+    if (
+      snake[0].x === sceneElements[i].pos.x &&
+      snake[0].y === sceneElements[i].pos.y
+    ) {
+      switch (sceneElements[i].type) {
+        case GridItemType.Apple:
+          sceneElements.splice(i, 1);
+          snake.push({
+            x: snake[snake.length - 1].x,
+            y: snake[snake.length - 1].y,
+          });
+          break;
+        case GridItemType.Bolt:
+          die();
+          break;
+      }
+    }
   }
 }
 
-function detectCollision() {}
+function die() {
+  clearInterval(tick);
+  alert("you died");
+}
+
 function drawSnake() {
   // clear the canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
   // draw the snake
-  ctx.fillStyle = SnakeColors.Body;
-  // single cell-snake snake for now.
-  ctx.fillRect(
-    snakeExample[0].x * tileSize,
-    snakeExample[0].y * tileSize,
-    tileSize,
-    tileSize
-  );
+  for (let i = 0; i < snake.length; i++) {
+    ctx.fillStyle = "black";
+    ctx.fillRect(
+      snake[i].x * tileSize,
+      snake[i].y * tileSize,
+      tileSize,
+      tileSize
+    );
+  }
 }
 
 function drawDebugGrid() {
@@ -112,12 +231,10 @@ function drawDebugGrid() {
 
   // put a label in each cell x,y in the top left corner
   ctx.fillStyle = "black";
-  ctx.font = "20px sans-serif";
+  ctx.font = "6px sans-serif";
   for (let x = 0; x < cellCount; x++) {
     for (let y = 0; y < cellCount; y++) {
       ctx.fillText(`${x},${y}`, x * tileSize + 0, y * tileSize + 20);
     }
   }
 }
-
-export default Direction;

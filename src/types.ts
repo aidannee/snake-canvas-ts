@@ -11,12 +11,26 @@ export enum Direction {
 }
 
 export enum SnakeColors {
-  Head = "yellow",
-  Body = "orange",
-  Tail = "yellow",
+  Head = "red",
+  Body = "green",
+  Tail = "blue",
 }
 
 export enum BorderPolicy {
   Wrap,
   Die,
+}
+
+export interface GridItem {
+  type: GridItemType;
+  pos: GridPosition;
+}
+export interface GridPosition {
+  x: number;
+  y: number;
+}
+
+export enum GridItemType {
+  Apple = "apple",
+  Bolt = "bolt",
 }
