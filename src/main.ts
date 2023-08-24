@@ -5,6 +5,7 @@
 // food -> grow logic
 // die logic
 import drawWithRotate from "./drawWithRotate";
+import { gameOn, toggleGameOn } from "./startButton";
 import {
   Direction,
   SnakeSegment,
@@ -22,6 +23,7 @@ import { lastDirectionMovedBySnake, lastInputByUser } from "./input";
 
 const cellCount = 10;
 const tileSize = 50;
+let score = 0;
 
 const borderPolicy = BorderPolicy.Wrap;
 const sceneElements: GridItem[] = [];
@@ -46,12 +48,13 @@ const tick = setInterval(() => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   moveSnake();
   detectCollision();
+  drawScore();
   drawSnake();
   // drawDebugGrid();
   populateScene();
 
   drawSceneElements();
-  console.log(snake);
+  // console.log(snake);
 }, 200);
 
 // ! DRAWING FUNCTIONS
@@ -75,7 +78,7 @@ function drawSnake() {
       drawWithRotate(
         ctx,
         tailImage,
-        snake[i].direction,
+        snake[i - 1].direction,
 
         snake[i].x * tileSize,
         snake[i].y * tileSize,
@@ -285,6 +288,7 @@ function detectCollision() {
       switch (sceneElements[i].type) {
         case GridItemType.Apple:
           sceneElements.splice(i, 1);
+          score++;
           snake.push({
             x: snake[snake.length - 1].x,
             y: snake[snake.length - 1].y,
@@ -301,9 +305,17 @@ function detectCollision() {
 
 function die() {
   clearInterval(tick);
-  alert("you died");
+  // alert("you died");
+  // toggleGameOn();
 
   // location.reload();
+}
+
+function drawScore() {
+  // update score
+  ctx.fillStyle = "black";
+  ctx.font = "20px sans-serif";
+  ctx.fillText(`Score: ${snake.length - 3}`, 0, 20);
 }
 
 // function drawDebugGrid() {
