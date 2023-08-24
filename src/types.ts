@@ -1,6 +1,7 @@
 export interface SnakeSegment {
   x: number;
   y: number;
+  direction: Direction;
 }
 
 export enum Direction {
@@ -15,6 +16,14 @@ export enum SnakeColors {
   Body = "green",
   Tail = "blue",
 }
+export const headImage = new Image();
+headImage.src = "../public/sprites/snake-head.png";
+
+export const bodyImage = new Image();
+bodyImage.src = "../public/sprites/snake-body.png";
+
+export const tailImage = new Image();
+tailImage.src = "../public/sprites/snake-tail.png";
 
 export enum BorderPolicy {
   Wrap,
@@ -32,5 +41,5 @@ export interface GridPosition {
 
 export enum GridItemType {
   Apple = "apple",
-  Bolt = "bolt",
+  Trap = "trap",
 }
