@@ -5,14 +5,11 @@
 // food -> grow logic
 // die logic
 import drawWithRotate from "./drawWithRotate";
-import { gameOn, toggleGameOn } from "./startButton";
 import {
   Direction,
   SnakeSegment,
-  SnakeColors,
   BorderPolicy,
   GridItem,
-  GridPosition,
   GridItemType,
   headImage,
   bodyImage,
@@ -305,10 +302,10 @@ function detectCollision() {
 
 function die() {
   clearInterval(tick);
-  // alert("you died");
+  alert("you died");
   // toggleGameOn();
 
-  // location.reload();
+  location.reload();
 }
 
 function drawScore() {
