@@ -11,19 +11,14 @@ export enum Direction {
   Right,
 }
 
-export enum SnakeColors {
-  Head = "red",
-  Body = "green",
-  Tail = "blue",
-}
 export const headImage = new Image();
-headImage.src = "../public/sprites/snake-head.png";
+headImage.src = "sprites/snake-head.png";
 
 export const bodyImage = new Image();
-bodyImage.src = "../public/sprites/snake-body.png";
+bodyImage.src = "sprites/snake-body.png";
 
 export const tailImage = new Image();
-tailImage.src = "../public/sprites/snake-tail.png";
+tailImage.src = "sprites/snake-tail.png";
 
 export enum BorderPolicy {
   Wrap,
@@ -43,3 +38,8 @@ export enum GridItemType {
   Apple = "apple",
   Trap = "trap",
 }
+
+export const appleImage = new Image();
+appleImage.src = "sprites/apple.png";
+export const trapImage = new Image();
+trapImage.src = "sprites/trap.png";

@@ -14,6 +14,8 @@ import {
   headImage,
   bodyImage,
   tailImage,
+  appleImage,
+  trapImage,
 } from "./types";
 
 import { lastDirectionMovedBySnake, lastInputByUser } from "./input";
@@ -102,14 +104,11 @@ function drawSceneElements() {
   sceneElements.forEach((element) => {
     switch (element.type) {
       case GridItemType.Apple:
-        const appleImg = new Image();
-        appleImg.src = "../public/sprites/apple.png";
         const posXApple = element.pos.x * tileSize;
         const posYApple = element.pos.y * tileSize;
-        appleImg.onload = () => {
-          // Draw the image onto the canvas
-          ctx.drawImage(appleImg, posXApple, posYApple, tileSize, tileSize);
-        };
+
+        ctx.drawImage(appleImage, posXApple, posYApple, tileSize, tileSize);
+
         // ctx.fillStyle = "red";
         // ctx.fillRect(
         //   element.pos.x * tileSize,
@@ -120,14 +119,12 @@ function drawSceneElements() {
 
         break;
       case GridItemType.Trap:
-        const trapImg = new Image();
-        trapImg.src = "../public/sprites/trap.png";
         const posXTrap = element.pos.x * tileSize;
         const posYTrap = element.pos.y * tileSize;
-        trapImg.onload = () => {
-          // Draw the image onto the canvas
-          ctx.drawImage(trapImg, posXTrap, posYTrap, tileSize, tileSize);
-        };
+
+        // Draw the image onto the canvas
+        ctx.drawImage(trapImage, posXTrap, posYTrap, tileSize, tileSize);
+
         // ctx.fillStyle = "blue";
         // ctx.fillRect(
         //   element.pos.x * tileSize,
