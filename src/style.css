@@ -99,3 +99,6 @@ button:focus-visible {
 canvas {
   image-rendering: pixelated;
 }
+#housing {
+  text-align: center;
+}
