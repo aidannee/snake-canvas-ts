@@ -2,41 +2,47 @@
 
 <img src="https://images.unsplash.com/photo-1531386151447-fd76ad50012f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80"></img>
 
-# Simple Snake Game in TypeScript
+# Snake Game
 
-![Gameplay Demo](demo.gif) <!-- If you have a gameplay demo, replace `demo.gif` with your actual demo file -->
+This project is a rendition of the classic game Snake, implemented using Tailwind, React, and TypeScript. The game is designed to be played on desktops using either WASD or directional keys for movement.
 
-This is a simple Snake game implemented in TypeScript. It's a classic arcade game where you control a snake, guiding it to eat food and grow longer while avoiding traps and collisions with itself.
+## Game Description
 
-**Please Note:** This game is optimized for desktop play and may not work well on mobile devices.
+The game follows the classic Snake mechanics and includes the following features:
 
+- **Looping Logic:** The snake moves within a grid, wrapping around when reaching the borders based on the set policy.
+- **User Input:** Utilizes directional keys (WASD or arrow keys) for controlling the snake's movement.
+- **Illegal Move Logic:** Handles illegal moves by preventing the snake from moving through itself or outside the game boundaries.
+- **Tail Update Logic:** Manages the snake's body as it moves, updating its segments based on movement and growth.
+- **Food & Growth Logic:** Includes food elements that the snake can consume to grow longer.
+- **Death Logic:** Implements game over scenarios when the snake collides with itself or specific trap elements.
 
-### 📝 Prerequisites
+## How to Play
 
-```bash
-# Check that you have npm installed
-which npm
-```
+- Use the WASD or arrow keys to navigate the snake.
+- Avoid colliding with the snake's body or traps.
+- Eat the apples to grow longer and increase your score.
 
-### 🛠️ Getting Started
+## Project Structure
 
-```bash
-npm install
-```
+The project contains the following key components:
 
-### 🚀 Launching the Game
+- `drawWithRotate`: Function responsible for drawing different game elements with rotation.
+- `types.ts`: File containing various types and constants used in the game.
+- `input.ts`: Handles user input and last directional movements.
 
-```bash
-# Run the game
-npm run dev
-```
+## Setup and Execution
 
-### :snake: HOW TO PLAY
+1. **Installation:** Clone the repository and install dependencies using `npm install`.
+2. **Run:** Start the game using `npm start`.
+3. **Play:** Open the game in a web browser and begin playing.
 
-Use the arrow keys (Up/W, Down/S, Left/A, Right/D) to control the snake's direction.
-Your goal is to eat the food (apple) to grow longer.
-Avoid running into the traps(fire) or the snake's own body.
-The game ends when you hit the fire or yourself.
-Your score is updated every time you eat an apple!
-Happy slithering! 
+## Contributing
+
+Contributions to enhance the game or add new features are welcome! Feel free to submit issues or pull requests.
+
+---
+
+Feel free to explore the codebase, provide feedback, and enjoy playing the game!
+
 :snake::snake::snake:
