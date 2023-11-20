@@ -12,7 +12,7 @@ The game follows the classic Snake mechanics and includes the following features
 
 - **Looping Logic:** The snake moves within a grid, wrapping around when reaching the borders based on the set policy.
 - **User Input:** Utilizes directional keys (WASD or arrow keys) for controlling the snake's movement.
-- **Illegal Move Logic:** Handles illegal moves by preventing the snake from moving through itself or outside the game boundaries.
+- **Illegal Move Logic:** Handles illegal moves by preventing the snake from moving through itself
 - **Tail Update Logic:** Manages the snake's body as it moves, updating its segments based on movement and growth.
 - **Food & Growth Logic:** Includes food elements that the snake can consume to grow longer.
 - **Death Logic:** Implements game over scenarios when the snake collides with itself or specific trap elements.
