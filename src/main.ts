@@ -109,14 +109,6 @@ function drawSceneElements() {
 
         ctx.drawImage(appleImage, posXApple, posYApple, tileSize, tileSize);
 
-        // ctx.fillStyle = "red";
-        // ctx.fillRect(
-        //   element.pos.x * tileSize,
-        //   element.pos.y * tileSize,
-        //   tileSize,
-        //   tileSize
-        // );
-
         break;
       case GridItemType.Trap:
         const posXTrap = element.pos.x * tileSize;
@@ -125,44 +117,11 @@ function drawSceneElements() {
         // Draw the image onto the canvas
         ctx.drawImage(trapImage, posXTrap, posYTrap, tileSize, tileSize);
 
-        // ctx.fillStyle = "blue";
-        // ctx.fillRect(
-        //   element.pos.x * tileSize,
-        //   element.pos.y * tileSize,
-        //   tileSize,
-        //   tileSize
-        // );
         break;
     }
   });
 }
-// function populateScene() {
-//   if (
-//     sceneElements.filter((element) => element.type === GridItemType.Apple)
-//       .length < 1
-//   ) {
-//     sceneElements.push({
-//       type: GridItemType.Apple,
-//       pos: {
-//         x: Math.floor(Math.random() * cellCount),
-//         y: Math.floor(Math.random() * cellCount),
-//       },
-//     });
-//   }
-//   if (
-//     sceneElements.filter((element) => element.type === GridItemType.Trap)
-//       .length < 1
-//   ) {
-//     sceneElements.push({
-//       type: GridItemType.Trap,
-//       pos: {
-//         x: Math.floor(Math.random() * cellCount),
-//         y: Math.floor(Math.random() * cellCount),
-//       },
-//     });
-//   }
-//   // console.log(sceneElements);
-// }
+
 function isPositionOccupied(posX: number, posY: number): boolean {
   return (
     sceneElements.some(
@@ -311,27 +270,3 @@ function drawScore() {
   ctx.font = "20px sans-serif";
   ctx.fillText(`Score: ${snake.length - 3}`, 0, 20);
 }
-
-// function drawDebugGrid() {
-//   // for debugging
-//   ctx.strokeStyle = "black";
-//   for (let i = 0; i < cellCount + 1; i++) {
-//     ctx.beginPath();
-//     ctx.moveTo(0, tileSize * i);
-//     ctx.lineTo(cellCount * tileSize, tileSize * i);
-//     ctx.stroke();
-//     ctx.beginPath();
-//     ctx.moveTo(tileSize * i, 0);
-//     ctx.lineTo(tileSize * i, cellCount * tileSize);
-//     ctx.stroke();
-//   }
-
-//   // put a label in each cell x,y in the top left corner
-//   ctx.fillStyle = "black";
-//   ctx.font = "6px sans-serif";
-//   for (let x = 0; x < cellCount; x++) {
-//     for (let y = 0; y < cellCount; y++) {
-//       ctx.fillText(`${x},${y}`, x * tileSize + 0, y * tileSize + 20);
-//     }
-//   }
-// }
